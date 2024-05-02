@@ -1,6 +1,7 @@
-# OpenSCAD-Lib
-random collection of functions i need
+# Alice-OpenSCAD-Lib
+Random collection of modules i need.
 
-someone else probably did this better
+If you need any of this, feel free to use it, but there are probably better/more comprehensive [libraries](https://openscad.org/libraries.html) out there.
 
-LICENSE: consider this public domain. go wild.
+## License
+Consider the contents of this repository, exept `Logo.scad` public domain. Go wild!
