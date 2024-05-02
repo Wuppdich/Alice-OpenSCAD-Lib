@@ -5,6 +5,13 @@ module mirror_copy(vec){
     }
 }
 
+module copy_rotate(n=6) {
+    step_size = 360 / n;
+    for (i=[0:step_size:360]) {
+        rotate([0, 0, i]) children();
+    }
+}
+
 module rotate_around(r, p) {
     translate(p) rotate(r) translate(-p) children();
 }
