@@ -5,6 +5,10 @@ module mirror_copy(vec){
     }
 }
 
+module rotate_around(r, p) {
+    translate(p) rotate(r) translate(-p) children();
+}
+
 module mirror_copy_to(vec, loc) {
     translate(loc / 2) mirror_copy(vec) translate(-loc / 2) children();
 }
