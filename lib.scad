@@ -40,11 +40,7 @@ module torus(r1, r2) {
 }
 
 module square_rounded(size,r,center=false){
-    translate(center ? [0, 0] : [size.x / 2, size.y / 2, 0]) hull(){
-        mirror_copy([0, 1, 0]) translate([0, size.y / 2 - r, 0]) 
-            mirror_copy([1, 0, 0]) translate([size.x / 2 - r, 0, 0])
-                circle(r=r);
-    }
+    offset(r=r) offset(-r) square(size, center=center);
 }
 
 module square_chamfer(size, fase, center=false){
