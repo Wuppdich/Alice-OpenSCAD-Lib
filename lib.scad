@@ -98,3 +98,19 @@ module saddle(radius1, radius2, angle=360) {
         translate([radius1 + radius2, radius1, 0]) circle(r=radius1);
     }
 }
+
+module honeycomb(n_x, n_y, hex_key, wall_thickness) {
+    assert(wall_thickness < hex_key);
+    hex_distance = hex_key - wall_thickness;
+    sin_sixty = sin(60);
+    for(y=[0:n_y - 1]) {
+        x_shift = y % 2 == 0 ? 0 : hex_distance / 2;
+        translate([x_shift, y * hex_distance * sin_sixty, 0])
+            for(x=[0:n_x - 1]) {
+                translate([x * (hex_distance), 0, 0]) difference() {
+                    hex(hex_key);
+                    hex(hex_key - wall_thickness * 2);
+                }
+        }
+    }
+}
