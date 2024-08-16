@@ -94,6 +94,13 @@ module hex(key) {
     }
 }
 
+module hollow_hex(key, wall) {
+    difference() {
+        hex(key);
+        hex(key - wall * 2);
+    }
+}
+
 module saddle(radius1, radius2, angle=360) {
     rotate_extrude(angle=angle) difference() {
         square(size=[radius1 + radius2, radius1 * 2]);
