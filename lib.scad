@@ -108,18 +108,15 @@ module saddle(radius1, radius2, angle=360) {
     }
 }
 
-module honeycomb(n_x, n_y, hex_key, wall_thickness) {
-    assert(wall_thickness < hex_key);
-    hex_distance = hex_key - wall_thickness;
+module honeycomb(n_x, n_y, key, wall) {
+    assert(wall < key); // wall needs to be thinner than key
+    hex_distance = key - wall;
     sin_sixty = sin(60);
-    for(y=[0:n_y - 1]) {
-        x_shift = y % 2 == 0 ? 0 : hex_distance / 2;
-        translate([x_shift, y * hex_distance * sin_sixty, 0])
-            for(x=[0:n_x - 1]) {
-                translate([x * (hex_distance), 0, 0]) difference() {
-                    hex(hex_key);
-                    hex(hex_key - wall_thickness * 2);
-                }
+    translate([key / 2, key / tan(60)])
+        for(y=[0:n_y - 1]) {
+            x_shift = y % 2 == 0 ? 0 : hex_distance / 2; // every second row is shifted to the left
+            xn = y % 2 == 0 ? n_x - 1 : n_x - 2; // drop one hex on a shifted row to avoid overextension
+            translate([x_shift, y * hex_distance * sin_sixty, 0])
+                repeat(xn, [hex_distance, 0, 0]) hollow_hex(key = key, wall = wall);
         }
-    }
 }
