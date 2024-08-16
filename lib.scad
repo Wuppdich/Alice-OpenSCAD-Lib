@@ -12,8 +12,8 @@ module copy_rotate(n=6) {
     }
 }
 
-module rotate_around(r, p) {
-    translate(p) rotate(r) translate(-p) children();
+module rotate_around(angle, p) {
+    translate(p) rotate(angle) translate(-p) children();
 }
 
 module mirror_copy_to(vec, loc) {
@@ -101,30 +101,30 @@ module hollow_hex(key, wall) {
     }
 }
 
-module saddle(radius1, radius2, angle=360) {
+module saddle(r1, r2, angle=360) {
     rotate_extrude(angle=angle) difference() {
-        square(size=[radius1 + radius2, radius1 * 2]);
-        translate([radius1 + radius2, radius1, 0]) circle(r=radius1);
+        square(size=[r1 + r2, r1 * 2]);
+        translate([r1 + r2, r1, 0]) circle(r=r1);
     }
 }
 
-module honeycomb(n_x, n_y, key, wall) {
+module honeycomb(nx, ny, key, wall) {
     assert(wall < key); // wall needs to be thinner than key
     hex_distance = key - wall;
     sin_sixty = sin(60);
     translate([key / 2, key / tan(60)])
-        for(y=[0:n_y - 1]) {
+        for(y=[0:ny - 1]) {
             x_shift = y % 2 == 0 ? 0 : hex_distance / 2; // every second row is shifted to the left
-            xn = y % 2 == 0 ? n_x - 1 : n_x - 2; // drop one hex on a shifted row to avoid overextension
+            line_nx = y % 2 == 0 ? nx - 1 : nx - 2; // drop one hex on a shifted row to avoid overextension
             translate([x_shift, y * hex_distance * sin_sixty, 0])
-                repeat(xn, [hex_distance, 0, 0]) hollow_hex(key = key, wall = wall);
+                repeat(n = line_nx, offset = [hex_distance, 0, 0]) hollow_hex(key = key, wall = wall);
         }
 }
 
 module honeycomb_fill(size, key, wall){
     hex_distance = key - wall;
     sin_sixty = sin(60);
-    xn = floor((size.x - key) / hex_distance) + 1;
-    yn = floor((size.y - key) / (hex_distance * sin_sixty)) + 1;
-    honeycomb(n_x = xn, n_y = yn, key = key, wall = wall);
+    nx = floor((size.x - key) / hex_distance) + 1;
+    ny = floor((size.y - key) / (hex_distance * sin_sixty)) + 1;
+    honeycomb(nx = nx, ny = ny, key = key, wall = wall);
 }
