@@ -120,3 +120,11 @@ module honeycomb(n_x, n_y, key, wall) {
                 repeat(xn, [hex_distance, 0, 0]) hollow_hex(key = key, wall = wall);
         }
 }
+
+module honeycomb_fill(size, key, wall){
+    hex_distance = key - wall;
+    sin_sixty = sin(60);
+    xn = floor((size.x - key) / hex_distance) + 1;
+    yn = floor((size.y - key) / (hex_distance * sin_sixty)) + 1;
+    honeycomb(n_x = xn, n_y = yn, key = key, wall = wall);
+}
