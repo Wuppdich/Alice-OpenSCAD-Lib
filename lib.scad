@@ -80,6 +80,12 @@ module repeat_to(n, end, endings=true) {
     }
 }
 
+module repeat(n, offset) {
+    for(x=[0:n]){
+        translate(offset * x) children();
+    }
+}
+
 module hex(key) {
     union() {
         for(i=[0:2]){
