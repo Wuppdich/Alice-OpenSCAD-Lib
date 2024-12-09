@@ -93,7 +93,7 @@ module repeat_to(n, end, endings=true) {
 
 // repeats a shape `n` times, shifted by `offset`
 module repeat(n, offset) {
-    for(x=[0:n]){
+    for(x=[0:n-1]){
         translate(offset * x) children();
     }
 }
